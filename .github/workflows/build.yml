@@ -6,8 +6,6 @@ on:
   push:
     branches:
       - main
-    paths-ignore:
-      - '**/*.md'
 
 permissions:
   contents: read
@@ -30,11 +28,8 @@ jobs:
 
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
-
-      - name: Install Android SDK 36
-        run: |
-          sdkmanager "platforms;android-36" \
-                     "build-tools;36.0.0"
+        with:
+          packages: 'platform-tools platforms;android-36 build-tools;36.0.0'
 
       - name: Grant Gradle permission
         run: chmod +x gradlew
@@ -49,4 +44,3 @@ jobs:
           path: app/build/outputs/apk/debug/app-debug.apk
           if-no-files-found: error
           retention-days: 30
-
